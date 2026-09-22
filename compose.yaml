@@ -1,0 +1,74 @@
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: capstone
+      POSTGRES_PASSWORD: capstone
+      POSTGRES_DB: capstone
+    ports:
+      - "5432:5432"
+    volumes:
+      - capstone-db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U capstone -d capstone"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+  migrate:
+    build: .
+    environment:
+      DATABASE_URL: postgresql://capstone:capstone@db:5432/capstone
+    command: ["python", "-m", "app.migrate"]
+    depends_on:
+      db:
+        condition: service_healthy
+  api:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      DATABASE_URL: postgresql://capstone:capstone@db:5432/capstone
+      GEMINI_API_KEY: ${GEMINI_API_KEY:-}
+      VISION_MODEL: ${VISION_MODEL:-gemini-3.1-flash-lite}
+      EMBEDDING_MODEL: ${EMBEDDING_MODEL:-gemini-embedding-2}
+      AI_MODE: ${AI_MODE:-fixture}
+      AI_BUDGET_USD: ${AI_BUDGET_USD:-0.10}
+      AI_MAX_CALLS_PER_JOB: ${AI_MAX_CALLS_PER_JOB:-160}
+      VISION_CONFIDENCE_THRESHOLD: ${VISION_CONFIDENCE_THRESHOLD:-0.70}
+      MATCH_SIMILARITY_THRESHOLD: ${MATCH_SIMILARITY_THRESHOLD:-0.70}
+    command: ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+  worker:
+    build: .
+    environment:
+      DATABASE_URL: postgresql://capstone:capstone@db:5432/capstone
+      GEMINI_API_KEY: ${GEMINI_API_KEY:-}
+      VISION_MODEL: ${VISION_MODEL:-gemini-3.1-flash-lite}
+      EMBEDDING_MODEL: ${EMBEDDING_MODEL:-gemini-embedding-2}
+      AI_MODE: ${AI_MODE:-fixture}
+      AI_BUDGET_USD: ${AI_BUDGET_USD:-0.10}
+      AI_MAX_CALLS_PER_JOB: ${AI_MAX_CALLS_PER_JOB:-160}
+      VISION_CONFIDENCE_THRESHOLD: ${VISION_CONFIDENCE_THRESHOLD:-0.70}
+      MATCH_SIMILARITY_THRESHOLD: ${MATCH_SIMILARITY_THRESHOLD:-0.70}
+    command: ["python", "-m", "app.worker"]
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+  seed:
+    build: .
+    environment:
+      DATABASE_URL: postgresql://capstone:capstone@db:5432/capstone
+      GEMINI_API_KEY: ${GEMINI_API_KEY:-}
+      VISION_MODEL: ${VISION_MODEL:-gemini-3.1-flash-lite}
+      EMBEDDING_MODEL: ${EMBEDDING_MODEL:-gemini-embedding-2}
+      AI_MODE: ${AI_MODE:-fixture}
+    command: ["python", "-m", "app.seed"]
+    profiles: ["seed"]
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+
+volumes:
+  capstone-db:

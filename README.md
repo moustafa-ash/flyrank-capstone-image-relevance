@@ -4,7 +4,7 @@ An AI image understanding and semantic article-matching API. It tags a small Pex
 
 ## Status
 
-Phase 1 design and repository pack are committed. Live Gemini and PostgreSQL evidence is added phase by phase.
+Phase 1 design and repository pack are committed. The Phase 2 runtime is implemented; live Gemini and PostgreSQL evidence is added after Docker is started.
 
 ## Architecture
 
@@ -23,7 +23,10 @@ post + vectors --> cosine ranking --> mismatch guard --> suggestion/review
 
 The final README will contain the measured top-1 precision, tuned thresholds, curl probes, and limitations after live verification.
 
+## Deterministic verification
+
+The fixture provider is used for offline tests and never claimed as Gemini quality evidence. Run `uv run --no-project --with pytest --with pydantic pytest -q tests` for the current four core guard checks.
+
 ## Attribution
 
 The corpus manifest records Pexels source pages and direct image URLs. Downloaded images are intentionally excluded from Git; the seed/download step records their SHA-256 lock file locally.
-
