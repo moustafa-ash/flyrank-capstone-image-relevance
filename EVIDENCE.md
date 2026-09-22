@@ -32,7 +32,11 @@ scripts/evaluate.py -> fixture top1_precision=1.0, chosen similarity_threshold=0
 Idempotent catalog replay -> same completed job id
 ```
 
-This is live PostgreSQL/API/worker evidence, but fixture-provider output is not Gemini quality evidence. The Gemini acceptance boxes remain pending until `GEMINI_API_KEY` is configured and the 50 downloaded images are processed with `AI_MODE=gemini`.
+This is live PostgreSQL/API/worker evidence, but fixture-provider output is not Gemini quality evidence. The Gemini acceptance boxes remain pending until provider quota permits processing the 50 downloaded images with `AI_MODE=gemini`.
+
+## Gemini provider attempt
+
+The configured local key was used without being printed. The worker reached Google, but the live batch received `429 RESOURCE_EXHAUSTED` on all three retry attempts before any image was processed (`processed=0`). This records provider availability/quota evidence only; no Gemini quality or precision claim is made.
 
 ## Phase 3/4 acceptance checklist
 
