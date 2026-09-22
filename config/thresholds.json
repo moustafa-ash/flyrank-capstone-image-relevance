@@ -1,0 +1,7 @@
+{
+  "manifest_sha256": "6721d084a7d63e7623991a675ccb34c9d53e21e7cff227cc8e5bbcbad09714b7",
+  "confidence_threshold": 0.70,
+  "similarity_threshold": 0.70,
+  "status": "initial; replace with scripts/evaluate.py --write-thresholds after live catalog processing"
+}
+

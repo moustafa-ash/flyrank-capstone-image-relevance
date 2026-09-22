@@ -6,6 +6,6 @@ RUN pip install --no-cache-dir --upgrade pip && pip install --no-cache-dir . pyt
 COPY app app
 COPY migrations migrations
 COPY data data
+COPY config config
 COPY scripts scripts
 COPY README.md DESIGN.md BUILDLOG.md EVIDENCE.md capstone.yaml ./
-

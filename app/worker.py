@@ -30,7 +30,6 @@ def process_job(job: dict) -> None:
     job_id = job["id"]
     tenant_id = job["tenant_id"]
     with connection() as conn:
-        conn.execute("UPDATE jobs SET status='running', attempts=attempts+1, updated_at=now() WHERE id=%s", (job_id,))
         images = conn.execute("SELECT * FROM images WHERE tenant_id=%s ORDER BY id", (tenant_id,)).fetchall()
         posts = conn.execute("SELECT * FROM posts WHERE tenant_id=%s ORDER BY slug", (tenant_id,)).fetchall()
         total = len(images) + len(posts)
@@ -76,7 +75,13 @@ def process_job(job: dict) -> None:
 
 def run_once() -> bool:
     with connection() as conn:
-        job = conn.execute("""SELECT * FROM jobs WHERE status='queued' ORDER BY created_at FOR UPDATE SKIP LOCKED LIMIT 1""").fetchone()
+        job = conn.execute(
+            """WITH next_job AS (
+                 SELECT id FROM jobs WHERE status='queued' ORDER BY created_at FOR UPDATE SKIP LOCKED LIMIT 1
+               )
+               UPDATE jobs SET status='running', attempts=attempts+1, updated_at=now()
+               WHERE id=(SELECT id FROM next_job) RETURNING *"""
+        ).fetchone()
         if not job:
             return False
     try:

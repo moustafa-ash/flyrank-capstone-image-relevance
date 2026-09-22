@@ -1,0 +1,13 @@
+[
+  {"post_slug":"red-fox-behavior","expected_subject":"red fox"},
+  {"post_slug":"fox-conservation","expected_subject":"red fox"},
+  {"post_slug":"wolf-pack-dynamics","expected_subject":"gray wolf"},
+  {"post_slug":"canis-lupus","expected_subject":"gray wolf"},
+  {"post_slug":"companion-dogs","expected_subject":"dog"},
+  {"post_slug":"bear-habitat","expected_subject":"bear"},
+  {"post_slug":"deer-migration","expected_subject":"deer"},
+  {"post_slug":"fox-wolf-boundary","expected_subject":"red fox"},
+  {"post_slug":"urban-dog-care","expected_subject":"dog"},
+  {"post_slug":"bear-or-deer","expected_subject":"bear"}
+]
+

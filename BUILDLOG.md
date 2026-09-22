@@ -15,3 +15,8 @@ Future entries will record incorrect suggestions, fixes, live provider runs, and
 - Added PostgreSQL migrations, API/worker/seed Compose services, idempotent catalog jobs, Pydantic vision validation, cost events, and a fixture provider.
 - The worker uses PostgreSQL as the queue and retries failed jobs up to three attempts; no Redis or Celery was added.
 - Docker Compose configuration validates locally. The daemon still needs to be started before live container evidence can be captured.
+
+## Phase 3 and Phase 4
+
+- Added canonical subject handling, cosine ranking, rejection explanations, labeled evaluation data, threshold-grid evaluation, and acceptance-probe tooling.
+- Added explicit limitations and an evidence checklist; unchecked items are not represented as passed.
