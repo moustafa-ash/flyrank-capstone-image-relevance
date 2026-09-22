@@ -12,6 +12,28 @@ docker compose config --quiet -> exit 0
 
 These are local fixture/configuration checks, not live Gemini or PostgreSQL acceptance evidence.
 
+## Live local-stack evidence (fixture provider)
+
+Captured 2026-09-23 with Docker Desktop running and `AI_MODE=fixture`:
+
+```text
+docker compose ps -> db healthy, api up :8000, worker up
+seeded 50 images and 11 posts
+catalog job -> status=completed, attempts=1, processed=61, total=61
+image_tags -> tagged=50, flagged=5
+embeddings -> embedded=61
+cost_events -> vision=100, image_embedding=100, post_embedding=22
+GET /health -> 200 {"status":"ok"}
+GET wildlife-without-match/images -> status=no_confident_match
+GET red-fox-behavior/images -> top subject=red fox
+PostgreSQL fox probe -> gray wolf, decision=rejected, reason=category_mismatch
+Conflicting review decision -> HTTP 409
+scripts/evaluate.py -> fixture top1_precision=1.0, chosen similarity_threshold=0.5
+Idempotent catalog replay -> same completed job id
+```
+
+This is live PostgreSQL/API/worker evidence, but fixture-provider output is not Gemini quality evidence. The Gemini acceptance boxes remain pending until `GEMINI_API_KEY` is configured and the 50 downloaded images are processed with `AI_MODE=gemini`.
+
 ## Phase 3/4 acceptance checklist
 
 - [ ] Batch run: all 50 images have schema-valid tags and at least one low-confidence image is flagged.
