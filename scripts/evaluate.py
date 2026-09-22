@@ -38,6 +38,7 @@ def evaluate(similarity_threshold: float) -> dict:
         if post["slug"] not in labels or not post_vectors.get(str(post["id"])):
             continue
         vector = post_vectors[str(post["id"])] ["embedding_values"]
+        # ponytail: linear scan is intentional for ~50 images; use pgvector when corpus latency requires it.
         candidates = []
         for image in images:
             score = cosine(list(vector), list(image["embedding_values"]))
@@ -68,4 +69,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

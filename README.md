@@ -4,7 +4,7 @@ An AI image understanding and semantic article-matching API. It tags a small Pex
 
 ## Status
 
-Phase 1 design and repository pack are committed. The Phase 2 runtime is implemented; live Gemini and PostgreSQL evidence is added after Docker is started.
+Phases 1–4 implementation and documentation are committed. Deterministic checks pass; live Gemini and PostgreSQL evidence is added after Docker is started with a configured key.
 
 ## Architecture
 
@@ -22,7 +22,7 @@ post + vectors --> cosine ranking --> mismatch guard --> suggestion/review
 4. Download the licensed corpus locally: `python scripts/fetch_corpus.py`.
 5. Enqueue catalog processing with `POST /v1/jobs/catalog` and `Idempotency-Key: demo-catalog-v1`.
 
-The final README will contain the measured top-1 precision, tuned thresholds, curl probes, and limitations after live verification.
+The final measured top-1 precision and tuned thresholds are intentionally not fabricated: they are written after live verification.
 
 After the worker completes, run `python scripts/evaluate.py --write-thresholds`. The command evaluates the ten labeled posts across a similarity-threshold grid and writes the selected threshold plus the manifest digest to `config/thresholds.json`.
 
