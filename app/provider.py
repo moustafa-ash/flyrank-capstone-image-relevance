@@ -9,6 +9,8 @@ from typing import Any
 from .config import settings
 from .schemas import ImageTags
 
+_GEMINI_CLIENT = None
+
 
 def _subject_from_id(image_id: str) -> str:
     value = image_id.rsplit("_", 1)[0].replace("_", " ")
@@ -44,11 +46,14 @@ def fixture_embedding(text: str) -> tuple[list[float], dict[str, int]]:
 
 
 def _client():
+    global _GEMINI_CLIENT
     if not settings.gemini_api_key:
         raise RuntimeError("GEMINI_API_KEY is required when AI_MODE=gemini")
     from google import genai
 
-    return genai.Client(api_key=settings.gemini_api_key)
+    if _GEMINI_CLIENT is None:
+        _GEMINI_CLIENT = genai.Client(api_key=settings.gemini_api_key)
+    return _GEMINI_CLIENT
 
 
 def vision_tags(image_id: str, image_path: Path | None = None) -> tuple[ImageTags, dict[str, int]]:
@@ -81,4 +86,3 @@ def embed_text(text: str) -> tuple[list[float], dict[str, int]]:
     embedding = response.embeddings[0]
     values = list(embedding.values or [])
     return values, {"prompt_tokens": max(1, len(text.split())), "candidates_tokens": 0}
-
