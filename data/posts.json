@@ -1,0 +1,14 @@
+[
+  {"slug":"red-fox-behavior","title":"How red foxes adapt to changing forests","body":"Red foxes, also known as Vulpes vulpes, use camouflage and careful listening while moving through woodland.","subject":"red fox","category":"animal"},
+  {"slug":"fox-conservation","title":"Protecting a clever wild fox","body":"A field guide to the orange coat, bushy tail, and nocturnal behavior of a red fox.","subject":"red fox","category":"animal"},
+  {"slug":"wolf-pack-dynamics","title":"Gray wolf pack dynamics","body":"Gray wolves coordinate travel and hunting across a large forest range.","subject":"gray wolf","category":"animal"},
+  {"slug":"canis-lupus","title":"The social life of Canis lupus","body":"Canis lupus is the scientific name for the gray wolf, a wild canine with complex pack behavior.","subject":"gray wolf","category":"animal"},
+  {"slug":"companion-dogs","title":"Why companion dogs read human cues","body":"Domestic dogs learn routines, follow gestures, and form close bonds with people.","subject":"dog","category":"animal"},
+  {"slug":"bear-habitat","title":"Brown bears and seasonal habitat","body":"Brown bears forage across forests and rivers, changing their diet with the seasons.","subject":"bear","category":"animal"},
+  {"slug":"deer-migration","title":"Deer movement through woodland edges","body":"Deer browse at the forest edge and use quiet clearings to move between habitats.","subject":"deer","category":"animal"},
+  {"slug":"wildlife-without-match","title":"A guide to alpine glaciers","body":"This article discusses ice, meltwater, and mountain geology rather than wildlife.","subject":"glacier","category":"landscape"},
+  {"slug":"fox-wolf-boundary","title":"Foxes and wolves are not interchangeable","body":"Compare the red fox and gray wolf without confusing their size, behavior, or taxonomy.","subject":"red fox","category":"animal"},
+  {"slug":"urban-dog-care","title":"A practical urban dog care routine","body":"Leashes, enrichment, and safe walks help a domestic dog thrive in a city.","subject":"dog","category":"animal"},
+  {"slug":"bear-or-deer","title":"Choosing a wildlife tracking camera","body":"A field camera can observe a brown bear near a river or a deer in a clearing.","subject":"bear","category":"animal"}
+]
+
