@@ -42,6 +42,8 @@ services:
         condition: service_completed_successfully
   worker:
     build: .
+    volumes:
+      - ./data/images:/app/data/images:ro
     environment:
       DATABASE_URL: postgresql://capstone:capstone@db:5432/capstone
       GEMINI_API_KEY: ${GEMINI_API_KEY:-}
